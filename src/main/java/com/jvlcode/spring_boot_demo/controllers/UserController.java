@@ -2,7 +2,6 @@ package com.jvlcode.spring_boot_demo.controllers;
 
 import com.jvlcode.spring_boot_demo.entity.UserEntity;
 import com.jvlcode.spring_boot_demo.exceptions.ResourceNotFoundException;
-import com.jvlcode.spring_boot_demo.model.User;
 import com.jvlcode.spring_boot_demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
