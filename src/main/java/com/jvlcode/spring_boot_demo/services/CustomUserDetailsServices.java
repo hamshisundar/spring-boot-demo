@@ -1,4 +1,33 @@
 package com.jvlcode.spring_boot_demo.services;
 
-public class CustomUserDetailsServices {
+import com.jvlcode.spring_boot_demo.entity.UserEntity;
+import com.jvlcode.spring_boot_demo.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+
+@Service
+public class CustomUserDetailsServices implements UserDetailsService {
+    @Autowired
+    private UserRepository userRepository;
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        //Fetch User from Database
+        UserEntity user = userRepository.findByUsername(username)
+                .orElseThrow(()-> new UsernameNotFoundException("User NOT found"));
+
+        // Returns Spring Security's User object mapping database credentials
+        return new User(
+                user.getUsername(),
+                user.getPassword(),
+                new ArrayList<>() // Empty list means no Roles/Authorities assigned yet
+        );
+    }
 }
